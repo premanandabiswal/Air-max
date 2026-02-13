@@ -1,0 +1,24 @@
+[
+  { "id": 1, "name": "Nike Air Max Dn", "price": 160, "image": "/assets/1.png" ,"url":"1.html"},
+  { "id": 2, "name": "Nike Pegasus 41", "price": 140, "image": "/assets/2.png" ,"url":"2.html"},
+  { "id": 3, "name": "Nike Dri-FIT Solo", "price": 45, "image": "/assets/3.png" ,"url":"3.html"},
+  { "id": 4, "name": "Nike Air Zoom Tempo", "price": 150, "image": "/assets/4.png" ,"url":"4.html"},
+  { "id": 5, "name": "Nike React Infinity", "price": 160, "image": "/assets/5-r.png" ,"url":"5.html"},
+  { "id": 6, "name": "Nike Air Zoom Pegasus", "price": 130, "image": "/assets/6.png" ,"url":"6.html"},
+  { "id": 7, "name": "Nike Air Max 270", "price": 180, "image": "/assets/7.png" ,"url":"7.html"},
+  { "id": 8, "name": "Nike Air Force 1", "price": 90, "image": "/assets/8.png" ,"url":"8.html"},
+  { "id": 9, "name": "Nike ZoomX Vaporfly", "price": 250, "image": "/assets/9.png" ,"url":"9.html"},
+  { "id": 10, "name": "Nike Free RN", "price": 120, "image": "/assets/10.png" ,"url":"10.html"},
+  { "id": 11, "name": "Nike Joyride Run Flyknit", "price": 180, "image": "/assets/11.png" ,"url":"11.html"},
+  { "id": 12, "name": "Nike Air Zoom Alphafly", "price": 275, "image": "/assets/12.png" ,"url":"12.html"},
+  {"id":13,"name":"Air Jordan I","price":190,"image":"/assets/shoe1.png","url":"shoe2.html"},
+  {"id":14,"name":"Nike Air Zoom Structure","price":130,"image":"/assets/shoe2.png","url":"shoe3.html"},
+  {"id":15,"name":"Nike React Miler","price":160,"image":"/assets/shoe3.png","url":"shoe4.html"},
+  {"id":16,"name":"Nike Air Zoom Winflo","price":120,"image":"/assets/shoe4.png","url":"shoe5.html"},
+ {"id":17,"name":"Nike Air Max Plus","price":170,"image":"/assets/shoe5.png","url":"shoe6.html"},
+  {"id":18,"name":"Nike Air VaporMax","price":200,"image":"/assets/shoe6.png","url":"shoe7.html"},
+  {"id":19,"name":"Nike Air Huarache","price":140,"image":"/assets/shoe7.png","url":"shoe8.html"},
+  {"id":20,"name":"Nike Zoom Fly","price":160,"image":"/assets/shoe8.png","url":"shoe9.html"},
+  {"id":21,"name":"Nike Air Max 90","price":130,"image":"/assets/shoe9.png","url":"shoe10.html"}
+  
+]
