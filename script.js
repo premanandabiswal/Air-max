@@ -1,0 +1,309 @@
+fetch("/data/products.json")
+  .then(res => res.ok ? res.json() : Promise.resolve([]))
+  .then(products => {
+    // use products as before
+    console.log(products);
+    // ensure window.allProducts is set so search uses it
+    window.allProducts = products;
+    if (typeof window.renderProducts === 'function') window.renderProducts(window.allProducts);
+  })
+  .catch(err => console.error(err));
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Navbar
+  const navbar = document.getElementById('navbar');
+  const mobileMenuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  if (navbar) {
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) navbar.classList.add('nav-scrolled');
+      else navbar.classList.remove('nav-scrolled');
+    });
+  }
+
+  if (mobileMenuButton && mobileMenu) {
+    mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+  }
+
+  // --- Auth modal handlers (Sign up / Sign in) ---
+  const authModal = document.getElementById('auth-modal');
+  const signupBtn = document.getElementById('signup-button');
+  const authClose = document.getElementById('auth-close');
+  const tabSignin = document.getElementById('tab-signin');
+  const tabSignup = document.getElementById('tab-signup');
+  const formSignin = document.getElementById('form-signin');
+  const formSignup = document.getElementById('form-signup');
+  const signinMessage = document.getElementById('signin-message');
+  const signupMessage = document.getElementById('signup-message');
+  const authTitle = document.getElementById('auth-title');
+
+  function openAuth(mode = 'signin') {
+    if (!authModal) return;
+    authModal.classList.remove('hidden');
+    authModal.style.display = 'flex';
+    if (mode === 'signup') {
+      tabSignup?.classList.add('bg-gray-100');
+      tabSignin?.classList.remove('bg-gray-100');
+      formSignin?.classList.add('hidden');
+      formSignup?.classList.remove('hidden');
+      if (authTitle) authTitle.textContent = 'Create an account';
+    } else {
+      tabSignin?.classList.add('bg-gray-100');
+      tabSignup?.classList.remove('bg-gray-100');
+      formSignin?.classList.remove('hidden');
+      formSignup?.classList.add('hidden');
+      if (authTitle) authTitle.textContent = 'Sign in to your account';
+    }
+    if (signinMessage) signinMessage.textContent = '';
+    if (signupMessage) signupMessage.textContent = '';
+  }
+
+  function closeAuth() {
+    if (!authModal) return;
+    authModal.classList.add('hidden');
+    authModal.style.display = '';
+  }
+
+  // localStorage demo auth helpers
+  function loadUsers() { try { return JSON.parse(localStorage.getItem('users') || '[]'); } catch { return []; } }
+  function saveUsers(users) { localStorage.setItem('users', JSON.stringify(users)); }
+
+  function updateUserUI() {
+    const userArea = document.getElementById('user-area');
+    const signup = document.getElementById('signup-button');
+    let current = null;
+    try { current = JSON.parse(localStorage.getItem('currentUser') || 'null'); } catch { current = null; }
+    if (signup) signup.style.display = current ? 'none' : '';
+    if (!userArea) return;
+    userArea.innerHTML = '';
+    if (current) {
+      const nameEl = document.createElement('span');
+      nameEl.id = 'user-name';
+      nameEl.className = 'hidden md:inline-block text-sm px-3 py-1 rounded-full';
+      nameEl.textContent = current.name || (current.email ? current.email.split('@')[0] : 'User');
+
+      const logoutBtn = document.createElement('button');
+      logoutBtn.id = 'logout-button';
+      logoutBtn.className = 'md:inline-block text-sm px-3 py-1 rounded-full bg-red-50 text-red-600 ml-2';
+      logoutBtn.textContent = 'Logout';
+      logoutBtn.style.zIndex = '1001';
+
+      userArea.appendChild(nameEl);
+      userArea.appendChild(logoutBtn);
+
+      logoutBtn.addEventListener('click', () => {
+        localStorage.removeItem('currentUser');
+        updateUserUI();
+        location.reload();
+      });
+    }
+  }
+
+  // wire auth UI
+  if (signupBtn) signupBtn.addEventListener('click', () => openAuth('signup'));
+  if (authClose) authClose.addEventListener('click', closeAuth);
+  if (tabSignin) tabSignin.addEventListener('click', () => openAuth('signin'));
+  if (tabSignup) tabSignup.addEventListener('click', () => openAuth('signup'));
+  if (authModal) authModal.addEventListener('click', (e) => { if (e.target === authModal) closeAuth(); });
+
+  if (formSignup) formSignup.addEventListener('submit', (ev) => {
+    ev.preventDefault();
+    const name = document.getElementById('signup-name')?.value.trim() || '';
+    const email = (document.getElementById('signup-email')?.value || '').trim().toLowerCase();
+    const password = document.getElementById('signup-password')?.value || '';
+    if (!email || !password) { if (signupMessage) signupMessage.textContent = 'Please fill all fields.'; return; }
+    const users = loadUsers();
+    if (users.find(u => u.email === email)) { if (signupMessage) signupMessage.textContent = 'An account with that email already exists.'; return; }
+    users.push({ name, email, password });
+    saveUsers(users);
+    if (signupMessage) signupMessage.textContent = 'Account created. You can sign in now.';
+    setTimeout(() => openAuth('signin'), 600);
+  });
+
+  if (formSignin) formSignin.addEventListener('submit', (ev) => {
+    ev.preventDefault();
+    try {
+      const email = (document.getElementById('signin-email')?.value || '').trim().toLowerCase();
+      const password = document.getElementById('signin-password')?.value || '';
+      if (!email || !password) { if (signinMessage) signinMessage.textContent = 'Please fill all fields.'; return; }
+      const users = loadUsers();
+      const user = users.find(u => u.email === email && u.password === password);
+      if (!user) { if (signinMessage) signinMessage.textContent = 'Invalid email or password.'; return; }
+      localStorage.setItem('currentUser', JSON.stringify({ name: user.name, email: user.email }));
+      if (signinMessage) signinMessage.textContent = 'Signed in.';
+      closeAuth();
+      updateUserUI();
+    } catch (err) {
+      console.error('signin submit error', err);
+      if (signinMessage) signinMessage.textContent = 'An error occurred. Check console.';
+    }
+  });
+
+  // expose for console/debug
+  window.openAuth = openAuth;
+  window.updateUserUI = updateUserUI;
+
+  updateUserUI();
+
+  // --- Search functionality ---
+  // src/NIKE/script.js
+  // Loads products from /data/products.json, shows suggestions, and renders results into #products-grid
+  (function () {
+    'use strict';
+
+    // helper: safe fetch of JSON products
+    async function loadProductsOnce() {
+      if (Array.isArray(window.allProducts) && window.allProducts.length) return window.allProducts;
+      try {
+        const res = await fetch('/data/products.json');
+        if (res.ok) {
+          const data = await res.json();
+          window.allProducts = Array.isArray(data) ? data : [];
+          return window.allProducts;
+        }
+      } catch (e) {
+        console.warn('Could not fetch /data/products.json', e);
+      }
+      window.allProducts = window.allProducts || [];
+      return window.allProducts;
+    }
+
+    function escapeHtml(s) {
+      return String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+
+    // Render the main grid (uses existing window.renderProducts if present)
+    function renderGrid(items) {
+      if (typeof window.renderProducts === 'function') {
+        window.renderProducts(items);
+        return;
+      }
+      const grid = document.getElementById('products-grid');
+      if (!grid) return;
+      if (!items || !items.length) {
+        grid.innerHTML = '<div class="col-span-full p-6 text-center text-gray-500">No products found.</div>';
+        return;
+      }
+      grid.innerHTML = items.map(p => {
+        const img = escapeHtml((p.image || 'assets/shoe1.png').replace(/^\//, ''));
+        const name = escapeHtml(p.name || 'Untitled');
+        const price = p.price != null ? `$${escapeHtml(p.price)}` : '';
+        const url = escapeHtml((p.url || `shoe${p.id || ''}.html`).replace(/^\//, ''));
+        return `
+          <div class="group rounded-lg overflow-hidden transition-shadow duration-300 hover:shadow-2xl bg-white">
+            <div class="relative">
+              <img src="${img}" alt="${name}" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+            </div>
+            <div class="p-5">
+              <h3 class="font-bold text-lg">${name}</h3>
+              <p class="text-gray-500 mt-1">${price}</p>
+              <a href="${url}" class="inline-block mt-3 text-sm text-indigo-600">View</a>
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    // Search logic: suggestions and result rendering
+    document.addEventListener('DOMContentLoaded', () => {
+      const input = document.getElementById('search-input');
+      const sugg = document.getElementById('search-suggestions');
+      const wrapper = document.getElementById('search-wrapper');
+      const trendingSection = document.getElementById('trending');
+
+      if (!input || !sugg) {
+        console.warn('Search input or suggestions container missing.');
+        return;
+      }
+
+      function renderSuggestions(items) {
+        if (!items || items.length === 0) {
+          sugg.innerHTML = '<div class="p-2 text-sm text-gray-500">No results</div>';
+          sugg.classList.remove('hidden');
+          return;
+        }
+        sugg.innerHTML = items.map(p => {
+          const id = escapeHtml(String(p.id ?? p.name ?? ''));
+          const name = escapeHtml(p.name ?? 'Untitled');
+          const price = p.price != null ? `<span class="text-gray-500 text-xs ml-2">$${escapeHtml(p.price)}</span>` : '';
+          return `<a href="#" data-id="${id}" class="block px-3 py-2 hover:bg-gray-100 text-sm text-gray-800">${name}${price}</a>`;
+        }).join('');
+        sugg.classList.remove('hidden');
+      }
+
+      async function doSearch(q) {
+        const products = await loadProductsOnce();
+        const ql = q.toLowerCase();
+        const matches = products.filter(p => {
+          const name = (p.name || '').toLowerCase();
+          const id = String(p.id || '').toLowerCase();
+          const desc = (p.description || '').toLowerCase();
+          return name.includes(ql) || id.includes(ql) || desc.includes(ql);
+        });
+        renderSuggestions(matches.slice(0, 8));
+      }
+
+      async function showResults(q) {
+        const products = await loadProductsOnce();
+        const ql = q.toLowerCase();
+        const results = products.filter(p => {
+          const name = (p.name || '').toLowerCase();
+          const id = String(p.id || '').toLowerCase();
+          const desc = (p.description || '').toLowerCase();
+          return name.includes(ql) || id.includes(ql) || desc.includes(ql);
+        });
+        renderGrid(results);
+        sugg.classList.add('hidden');
+        if (trendingSection) trendingSection.scrollIntoView({ behavior: 'smooth' });
+      }
+
+      function hideSuggestions() {
+        sugg.classList.add('hidden');
+      }
+
+      let timer = 0;
+      input.addEventListener('input', (e) => {
+        const q = (e.target.value || '').trim();
+        clearTimeout(timer);
+        if (!q) { hideSuggestions(); return; }
+        timer = setTimeout(() => doSearch(q), 180);
+      });
+
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') { hideSuggestions(); input.blur(); return; }
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          const q = (input.value || '').trim();
+          if (!q) return;
+          showResults(q);
+        }
+      });
+
+      sugg.addEventListener('click', (e) => {
+        const a = e.target.closest('a[data-id]');
+        if (!a) return;
+        e.preventDefault();
+        const id = a.getAttribute('data-id');
+        loadProductsOnce().then(products => {
+          const product = products.find(p => String(p.id) === id || p.name === id);
+          if (product) {
+            renderGrid([product]);
+          }
+          hideSuggestions();
+          if (trendingSection) trendingSection.scrollIntoView({ behavior: 'smooth' });
+        });
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('#search-wrapper')) hideSuggestions();
+      });
+
+      // preload product list
+      loadProductsOnce().catch(() => {});
+    });
+  })();
+});
+!!document.getElementById('search-input')
+!!document.getElementById('search-suggestions')
+window.allProducts?.length
+typeof window.renderProducts

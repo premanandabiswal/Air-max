@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom 'Chrome Hearts' Inspired Dunk Low</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Use Inter as the default font */
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        /* Style for the subtle shadow on the image */
+        .product-image {
+            filter: drop-shadow(0 25px 25px rgb(0 0 0 / 0.15));
+            transition: transform 0.3s ease-in-out;
+        }
+        .product-image:hover {
+            transform: scale(1.05) rotate(3deg);
+        }
+    </style>
+</head>
+<body class="bg-[#f8f8f8]">
+
+    <!-- Main Container -->
+    <div class="container mx-auto p-4 md:p-8 lg:p-12">
+        <div class="flex flex-col lg:flex-row bg-white rounded-2xl shadow-lg overflow-hidden">
+            
+            <!-- Image Section -->
+            <div class="lg:w-1/2 flex items-center justify-center p-8 sm:p-12 bg-[#e8e8e8]">
+                <img src="assets/shoe5.png" alt="Custom Chrome Hearts Inspired Dunk Low Sneakers" class="product-image w-full max-w-md h-auto object-contain">
+            </div>
+
+            <!-- Description Section -->
+            <div class="lg:w-1/2 p-8 sm:p-12 flex flex-col justify-center">
+                <!-- Product Category -->
+                <p class="text-sm font-medium text-gray-500 uppercase tracking-wider">Luxury Custom</p>
+                
+                <!-- Product Title -->
+                <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 mt-2 mb-4 leading-tight">
+                    Custom 'Chrome Hearts' Dunk
+                </h1>
+
+                <!-- Product Description -->
+                <p class="text-gray-600 leading-relaxed mb-6">
+                    This bespoke Dunk Low is a masterclass in luxury customization, heavily inspired by the iconic Chrome Hearts aesthetic. It features a rich mocha and off-white color scheme, adorned with gothic lettering, cross motifs, and custom silver-toned hardware on the laces. A true grail piece for those who appreciate high fashion and street culture.
+                </p>
+
+                <!-- Product Details -->
+                <div class="mb-6">
+                    <p class="text-gray-800 font-semibold">
+                        <span class="text-gray-500 font-medium">Colorway:</span> Mocha / Off-White
+                    </p>
+                    <p class="text-gray-800 font-semibold">
+                        <span class="text-gray-500 font-medium">Style:</span> Custom Luxury
+                    </p>
+                </div>
+
+                <!-- Price -->
+                <div class="mb-8">
+                    <p class="text-4xl font-bold text-gray-900">$3,000.00</p>
+                    <p class="text-sm text-gray-500">Based on commission and material value.</p>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <button class="w-full sm:w-1/2 py-4 px-6 bg-[#3c3c3c] text-white font-bold rounded-lg shadow-md hover:bg-[#555555] transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-[#3c3c3c] focus:ring-opacity-75">
+                        Commission Inquiry
+                    </button>
+                    <button class="w-full sm:w-1/2 py-4 px-6 bg-gray-200 text-gray-800 font-bold rounded-lg hover:bg-gray-300 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50">
+                        Add to Wishlist
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

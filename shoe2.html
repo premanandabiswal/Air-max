@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dunk Low 'Community Garden'</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Use Inter as the default font */
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        /* Style for the subtle shadow on the image */
+        .product-image {
+            filter: drop-shadow(0 25px 25px rgb(0 0 0 / 0.15));
+            transition: transform 0.3s ease-in-out;
+        }
+        .product-image:hover {
+            transform: scale(1.05) rotate(20deg);
+        }
+    </style>
+</head>
+<body class="bg-[#f0edea]">
+
+    <!-- Main Container -->
+    <div class="container mx-auto p-4 md:p-8 lg:p-12">
+        <div class="flex flex-col lg:flex-row bg-white rounded-2xl shadow-lg overflow-hidden">
+            
+            <!-- Image Section -->
+            <div class="lg:w-1/2 flex items-center justify-center p-8 sm:p-12 bg-gray-100">
+                <img src="assets/shoe1.png" alt="Nike Dunk Low Community Garden sneakers" class="product-image w-full max-w-md h-auto object-contain">
+            </div>
+
+            <!-- Description Section -->
+            <div class="lg:w-1/2 p-8 sm:p-12 flex flex-col justify-center">
+                <!-- Product Category -->
+                <p class="text-sm font-medium text-gray-500 uppercase tracking-wider">Collector's Edition</p>
+                
+                <!-- Product Title -->
+                <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 mt-2 mb-4 leading-tight">
+                    Dunk Low 'Community Garden'
+                </h1>
+
+                <!-- Product Description -->
+                <p class="text-gray-600 leading-relaxed mb-6">
+                    Crafted with a unique, artistic touch, the 'Community Garden' Dunk Low features a collage-style patchwork upper with vibrant floral and abstract graphics. The design evokes a sense of unity and sustainability, with each pair telling its own story. Premium materials and a distinct color palette make this a standout piece for any collection.
+                </p>
+
+                <!-- Product Details -->
+                <div class="mb-6">
+                    <p class="text-gray-800 font-semibold">
+                        <span class="text-gray-500 font-medium">Colorway:</span> Multi-Color / Midnight Turquoise
+                    </p>
+                    <p class="text-gray-800 font-semibold">
+                        <span class="text-gray-500 font-medium">Style:</span> CZ9747-900
+                    </p>
+                </div>
+
+                <!-- Price -->
+                <div class="mb-8">
+                    <p class="text-4xl font-bold text-gray-900">$250.00</p>
+                    <p class="text-sm text-gray-500">Based on market value.</p>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <button class="w-full sm:w-1/2 py-4 px-6 bg-[#6a5a4c] text-white font-bold rounded-lg shadow-md hover:bg-[#816d5e] transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-[#6a5a4c] focus:ring-opacity-75">
+                        Buy Now
+                    </button>
+                    <button class="w-full sm:w-1/2 py-4 px-6 bg-gray-200 text-gray-800 font-bold rounded-lg hover:bg-gray-300 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

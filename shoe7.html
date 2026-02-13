@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom 'Super Mario' Inspired Dunk Low</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Use Inter as the default font */
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        /* Style for the subtle shadow on the image */
+        .product-image {
+            filter: drop-shadow(0 25px 25px rgb(0 0 0 / 0.15));
+            transition: transform 0.3s ease-in-out;
+        }
+        .product-image:hover {
+            transform: scale(1.05) rotate(-3deg);
+        }
+    </style>
+</head>
+<body class="bg-[#fffbeb]">
+
+    <!-- Main Container -->
+    <div class="container mx-auto p-4 md:p-8 lg:p-12">
+        <div class="flex flex-col lg:flex-row bg-white rounded-2xl shadow-lg overflow-hidden">
+            
+            <!-- Image Section -->
+            <div class="lg:w-1/2 flex items-center justify-center p-8 sm:p-12 bg-[#e0f2fe]">
+                <img src="assets/shoe6.png" alt="Custom Super Mario Inspired Dunk Low Sneakers" class="product-image w-full max-w-md h-auto object-contain">
+            </div>
+
+            <!-- Description Section -->
+            <div class="lg:w-1/2 p-8 sm:p-12 flex flex-col justify-center">
+                <!-- Product Category -->
+                <p class="text-sm font-medium text-blue-500 uppercase tracking-wider">Pop Culture Custom</p>
+                
+                <!-- Product Title -->
+                <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 mt-2 mb-4 leading-tight">
+                    Custom 'Super Mario' Dunk
+                </h1>
+
+                <!-- Product Description -->
+                <p class="text-gray-600 leading-relaxed mb-6">
+                    Level up your sneaker collection with this incredible custom creation inspired by the world of Super Mario. Every panel tells a story, featuring iconic elements like the Question Block, Piranha Plants, and nods to characters like Mario and Luigi. The vibrant, mismatched design captures the fun and adventure of the Mushroom Kingdom in a wearable masterpiece.
+                </p>
+
+                <!-- Product Details -->
+                <div class="mb-6">
+                    <p class="text-gray-800 font-semibold">
+                        <span class="text-gray-500 font-medium">Colorway:</span> Player 1 / Multi-Color
+                    </p>
+                    <p class="text-gray-800 font-semibold">
+                        <span class="text-gray-500 font-medium">Style:</span> Custom Gamer Edition
+                    </p>
+                </div>
+
+                <!-- Price -->
+                <div class="mb-8">
+                    <p class="text-4xl font-bold text-gray-900">$2,800.00</p>
+                    <p class="text-sm text-gray-500">Based on commission and artistic value.</p>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <button class="w-full sm:w-1/2 py-4 px-6 bg-[#e53e3e] text-white font-bold rounded-lg shadow-md hover:bg-[#c53030] transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-[#e53e3e] focus:ring-opacity-75">
+                        Power-Up Order
+                    </button>
+                    <button class="w-full sm:w-1/2 py-4 px-6 bg-yellow-400 text-gray-900 font-bold rounded-lg hover:bg-yellow-500 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-opacity-50">
+                        Add to Collection
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
